@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form with Validation</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .form-container { background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { margin-bottom: 20px; color: #333; text-align: center; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; color: #666; font-size: 14px; }
+        .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .input-group input:focus { border-color: #4abc96; }
+        .input-group.error input { border-color: #e74c3c; }
+        .error-message { color: #e74c3c; font-size: 12px; margin-top: 5px; display: none; }
+        .input-group.error .error-message { display: block; }
+        button { width: 100%; padding: 12px; background-color: #4abc96; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #3aa885; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form id="registrationForm" novalidate>
+            <div class="input-group" id="usernameGroup">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Min 3 characters">
+                <div class="error-message">Minimum 3 characters required.</div>
+            </div>
+            <div class="input-group" id="emailGroup">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="example@mail.com">
+                <div class="error-message">Enter a valid email.</div>
+            </div>
+            <div class="input-group" id="passwordGroup">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Min 6 characters">
+                <div class="error-message">Minimum 6 characters required.</div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            let isValid = true;
+            
+            // Validation logic
+            if (username.value.trim().length < 3) { showError('usernameGroup'); isValid = false; } else { clearError('usernameGroup'); }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { showError('emailGroup'); isValid = false; } else { clearError('emailGroup'); }
+            if (password.value.length < 6) { showError('passwordGroup'); isValid = false; } else { clearError('passwordGroup'); }
+            
+            if (isValid) alert('Form submitted successfully!');
+        });
+        function showError(id) { document.getElementById(id).classList.add('error'); }
+        function clearError(id) { document.getElementById(id).classList.remove('error'); }
+    </script>
+</body>
+</html>
